@@ -1,5 +1,6 @@
 "use client";
 import { useFormStore } from "@/store/useFormStore";
+import { passkitTemplateJson } from "@/utils/common";
 import Button from "@mui/material/Button";
 
 import { Container, Stack } from "@mui/system";
@@ -13,12 +14,13 @@ const FirstStepForm = ({ stepStep }: FormStepProps) => {
   const information = useFormStore((state) => state.information);
 
   const updateInformation = useFormStore((state) => state.updateInformation);
+  const resetInformation = useFormStore((state) => state.resetInformation);
 
   const searchParams = useSearchParams();
 
   const code = searchParams.get("code");
 
-  const { handleSubmit, control, getValues } = useForm({
+  const { handleSubmit, control, getValues, reset } = useForm({
     mode: "onChange",
     defaultValues: {
       header: information.header,
@@ -26,6 +28,10 @@ const FirstStepForm = ({ stepStep }: FormStepProps) => {
       title: code ? code : information.title,
     },
   });
+  const onReset = () => {
+    resetInformation();
+    reset();
+  };
   const onSubmit = (data: any) => {
     updateInformation({
       ...data,
@@ -33,15 +39,25 @@ const FirstStepForm = ({ stepStep }: FormStepProps) => {
     stepStep(2);
   };
 
+  const handleExportToJson = () => {
+    console.log("information", passkitTemplateJson(information));
+  };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Container>
         <Stack flexDirection={`column`} gap={`1rem`}>
           <div>
             <CustomTextField
+              label={`Passkit Logo`}
+              placeholder={`Passkit Logo`}
+              control={control}
+              name="logo"
+            />
+          </div>
+          <div>
+            <CustomTextField
               label={`Title`}
               placeholder={`Title`}
-              disabled={code ? true : false}
               control={control}
               name="title"
             />
@@ -62,9 +78,32 @@ const FirstStepForm = ({ stepStep }: FormStepProps) => {
               name="header"
             />
           </div>
+          <div>
+            <CustomTextField
+              label={`QR Code`}
+              placeholder={`QR Code`}
+              control={control}
+              name="qrCode"
+            />
+          </div>
+          <div>
+            <CustomTextField
+              label={`Hex Background Color`}
+              placeholder={`Hex Background Color`}
+              control={control}
+              name="hexBackgroundColor"
+            />
+          </div>
 
-          <Button variant="contained" type="submit">
-            Confirm
+          <Button onClick={() => onReset()} variant="contained" type="submit">
+            Reset
+          </Button>
+          <Button
+            onClick={() => handleExportToJson()}
+            variant="contained"
+            type="submit"
+          >
+            Export To Json
           </Button>
         </Stack>
       </Container>

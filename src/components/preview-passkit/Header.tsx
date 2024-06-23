@@ -8,7 +8,7 @@ import React from "react";
 const Header = () => {
   const information = useFormStore((state) => state.information);
   const activeField = useActiveFormStore((state) => state.activeField);
-  console.log("activeField", activeField);
+
   return (
     <Stack
       flexDirection={`row`}
@@ -23,11 +23,12 @@ const Header = () => {
         height={24}
         style={{
           borderRadius: "50%",
+          outline: activeField === "logo" ? "1px solid green" : "unset",
         }}
         alt="Passkit logo"
         src={`https://storage.googleapis.com/wallet-lab-tools-codelab-artifacts-public/pass_google_logo.jpg`}
       />
-      <Typography color={activeField === "title" ? "green" : "black"}>
+      <Typography color={activeField === "title" ? "green" : "unset"}>
         {information.title || "Title"}
       </Typography>
     </Stack>

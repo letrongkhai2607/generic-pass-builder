@@ -69,11 +69,6 @@ function CustomTextField({
       name={field.name} // send down the input name
       inputRef={field.ref}
       onFocus={handleOnFocus}
-      helperText={
-        <Typography color="red" fontSize={12}>
-          Required
-        </Typography>
-      } // send input ref, so we can focus on input when error appear
     />
   );
 }

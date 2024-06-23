@@ -1,13 +1,10 @@
 "use client";
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import { useFormStore } from "@/store/useFormStore";
-import { Container, Stack } from "@mui/system";
+import { checkingHexColorIsLight } from "@/utils/common";
+import Box from "@mui/material/Box";
+import { Stack } from "@mui/system";
+import * as React from "react";
+import BarCode from "./BarCode";
 import Header from "./Header";
 import TopRow from "./TopRow";
 
@@ -21,6 +18,9 @@ const bull = (
 );
 
 export default function BasicCard() {
+  const { hexBackgroundColor } = useFormStore((state) => state.information);
+  const isLight = checkingHexColorIsLight(hexBackgroundColor);
+
   return (
     // <Card sx={{ minWidth: 275 }}>
     //   <CardContent>
@@ -38,15 +38,22 @@ export default function BasicCard() {
     //     <Button size="small">Learn More</Button>
     //   </CardActions>
     // </Card>
-    <Stack justifyContent={`center`} alignItems={`center`}>
+    <Stack
+      justifyContent={`center`}
+      alignItems={`center`}
+      sx={{
+        color: isLight ? "black" : "white",
+      }}
+    >
       <Box
         width={`270px`}
         height={`400px`}
         borderRadius={`1rem`}
-        bgcolor="lightblue"
+        bgcolor={hexBackgroundColor || "lightblue"}
       >
         <Header />
         <TopRow />
+        <BarCode />
       </Box>
     </Stack>
   );

@@ -1,12 +1,15 @@
 import { create } from 'zustand'
 
 
-interface Information{
+export interface Information{
+  logo: string
   header: string,
   subHeader: string,
   title: string,
   age: string,
   expYear: string,
+  qrCode: string
+  hexBackgroundColor: string
 }
 interface FormStoreState {
   information: Information;
@@ -14,11 +17,14 @@ interface FormStoreState {
   resetInformation: () => void;
 }
 const initState = {
+  logo: "",
   header: "",
   subHeader: "",
   title: "",
   age: "",
   expYear: "",
+  qrCode: "",
+  hexBackgroundColor: "",
 }
 export const useFormStore = create<FormStoreState>((set) => ({
   information: initState,
