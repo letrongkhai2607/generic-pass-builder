@@ -14,7 +14,7 @@ const SecondStepForm = ({ stepStep }: FormStepProps) => {
   const information = useFormStore((state) => state.information);
   const updateInformation = useFormStore((state) => state.updateInformation);
   const resetInformation = useFormStore((state) => state.resetInformation);
-  const { handleSubmit, control, getValues } = useForm({
+  const { handleSubmit, control } = useForm({
     mode: "onChange",
     defaultValues: {
       expYear: information.expYear,

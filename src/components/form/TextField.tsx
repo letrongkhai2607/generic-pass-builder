@@ -1,3 +1,4 @@
+import { useActiveFormStore } from "@/store/useActiveFormStore";
 import { useFormStore } from "@/store/useFormStore";
 import {
   BaseTextFieldProps,
@@ -34,6 +35,9 @@ function CustomTextField({
 
   const information = useFormStore((state) => state.information);
   const updateInformation = useFormStore((state) => state.updateInformation);
+  const updateActiveField = useActiveFormStore(
+    (state) => state.updateActiveField
+  );
   const handleOnChangeFields = (event: React.ChangeEvent<HTMLInputElement>) => {
     field.onChange({ ...event });
     const value = event.target.value;
@@ -42,6 +46,13 @@ function CustomTextField({
       ...information,
       [`${field.name}`]: value,
     });
+  };
+  const handleOnFocus = () => {
+    updateActiveField(field.name);
+  };
+  const handleOnBlur = (event: any) => {
+    field.onBlur();
+    updateActiveField("");
   };
   return (
     <TextField
@@ -53,10 +64,11 @@ function CustomTextField({
       onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
         handleOnChangeFields(event);
       }} // send value to hook form
-      onBlur={field.onBlur} // notify when input is touched/blur
+      onBlur={(event) => handleOnBlur(event)} // notify when input is touched/blur
       value={field.value} // input value
       name={field.name} // send down the input name
       inputRef={field.ref}
+      onFocus={handleOnFocus}
       helperText={
         <Typography color="red" fontSize={12}>
           Required

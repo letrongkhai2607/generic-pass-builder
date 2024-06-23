@@ -1,3 +1,4 @@
+import { useActiveFormStore } from "@/store/useActiveFormStore";
 import { useFormStore } from "@/store/useFormStore";
 import { Typography } from "@mui/material";
 import { Stack } from "@mui/system";
@@ -6,6 +7,8 @@ import React from "react";
 
 const Header = () => {
   const information = useFormStore((state) => state.information);
+  const activeField = useActiveFormStore((state) => state.activeField);
+  console.log("activeField", activeField);
   return (
     <Stack
       flexDirection={`row`}
@@ -24,7 +27,9 @@ const Header = () => {
         alt="Passkit logo"
         src={`https://storage.googleapis.com/wallet-lab-tools-codelab-artifacts-public/pass_google_logo.jpg`}
       />
-      <Typography>{information.title || "Title"}</Typography>
+      <Typography color={activeField === "title" ? "green" : "black"}>
+        {information.title || "Title"}
+      </Typography>
     </Stack>
   );
 };

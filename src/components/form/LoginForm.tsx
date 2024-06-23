@@ -6,10 +6,11 @@ import { useSearchParams } from "next/navigation";
 
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import BasicCard from "../BasicCard";
+
 import FirstStepForm from "./FirstStepForm";
 import SecondStepForm from "./SecondStepForm";
 import CustomTextField from "./TextField";
+import { Typography } from "@mui/material";
 
 const LoginForm = () => {
   const [step, stepStep] = useState(1);
